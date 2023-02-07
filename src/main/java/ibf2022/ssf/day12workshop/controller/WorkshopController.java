@@ -14,15 +14,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/workshop")
 public class WorkshopController {
 
-    @GetMapping 
+    // HANDLER method for GET request
+    // GET method is used for retrieving data from a server, it is a safe and
+    // idempotent method,
+    // meaning multiple requests for the same resource will return the same result,
+    // without causing any side effects.
+    @GetMapping
     public String workshop() {
 
         return "workshop";
     }
 
+    // Handler Method for POST Requests
+    // POST method is used for creating new resources on a server, or updating
+    // existing ones, it is not safe and not idempotent.
     @PostMapping("/processNumber")
-    // line below: @RequestParam means it is requesting a parameter with the name "num" that is from a
-    // GET request
+    // line below: @RequestParam means it is requesting a parameter with the name "num" that is 
+    // from a GET request which is from the @Getmapping
     public String processNumber(@RequestParam(name = "num", defaultValue = "1") int num, Model model) {
 
         System.out.println("The number is: " + num); // Test is num is passed
@@ -31,23 +39,24 @@ public class WorkshopController {
         return "workshopResult";
     }
 
-    // The getNumber method creates an ArrayList containing different numbers of size num
+    // The getNumber method creates an ArrayList containing different numbers of
+    // size num
     public List<Integer> getNumber(int num) {
 
-        // instantiate an ArrayList to store different random numbers of count num
+        // Instantiate an ArrayList to store different random numbers of count num
         List<Integer> randomNum = new ArrayList<>();
 
-        int maxCount = num; //maxIndex of the randomNum list
-        int count = 1;
+        int maxCount = num; // maxIndex of the randomNum list
+        int count = 1; // Create count with initial value of 1
 
-        // define the range of 1 - 20 inclusive
+        // Define the range of 1 - 20 inclusive
         int max = 20;
         int min = 1;
         int range = max - min + 1;
 
         while (count <= maxCount) {
-            
-            int rand = (int)(Math.random() * range) + min;
+
+            int rand = (int) (Math.random() * range) + min;
 
             if (!randomNum.contains(rand)) {
                 randomNum.add(rand);
@@ -57,5 +66,5 @@ public class WorkshopController {
         }
 
         return randomNum;
-    } // end of getNumber method
+    } // End of getNumber method
 }
